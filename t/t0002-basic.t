@@ -73,6 +73,33 @@ test_expect_success '2n4p pmix.univ.size is set correctly' '
 			| sort -n >pmix.univ.size.out &&
 	test_cmp pmix.univ.size.exp pmix.univ.size.out
 '
+# issue #130: per-resource placement (--tasks-per-node) expands the task
+# count via a shell option, not the jobspec.  The job size must reflect the
+# expanded total; a stale value here previously broke MPI wireup.
+test_expect_success '2n4p pmix.job.size is correct with --tasks-per-node' '
+	cat >tpn.pmix.job.size.exp <<-EOT &&
+	0: 4
+	1: 4
+	2: 4
+	3: 4
+	EOT
+	run_timeout 30 flux run -N2 --tasks-per-node=2 \
+		${GETKEY} --proc=* --label-io pmix.job.size \
+			| sort -n >tpn.pmix.job.size.out &&
+	test_cmp tpn.pmix.job.size.exp tpn.pmix.job.size.out
+'
+test_expect_success '2n4p pmix.univ.size is correct with --tasks-per-node' '
+	cat >tpn.pmix.univ.size.exp <<-EOT &&
+	0: 4
+	1: 4
+	2: 4
+	3: 4
+	EOT
+	run_timeout 30 flux run -N2 --tasks-per-node=2 \
+		${GETKEY} --proc=* --label-io pmix.univ.size \
+			| sort -n >tpn.pmix.univ.size.out &&
+	test_cmp tpn.pmix.univ.size.exp tpn.pmix.univ.size.out
+'
 test_expect_success '2n3p pmix.local.size is set correctly' '
 	cat >2n3p.pmix.local.size.exp <<-EOT &&
 	0: 2

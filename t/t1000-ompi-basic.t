@@ -49,6 +49,28 @@ test_expect_success '2n2p ompi hello' '
 # --env=OMPI_MCA_btl_base_verbose=100 \
 # --env=OMPI_MCA_btl_tcp_if_exclude=docker0,lo \
 
+# see issue #130
+# per-resource task placement (--tasks-per-node, --tasks-per-core) expands
+# the task count via a shell option rather than the jobspec, so the pmix
+# plugin must source the job size from shell info, not jobspec info.
+test_expect_success '1n2p ompi hello with --tasks-per-node' '
+	run_timeout 30 flux run -N1 --tasks-per-node=2 \
+		${MPI_HELLO} >hello_tpn_1n2p.out &&
+	grep "There are 2 tasks" hello_tpn_1n2p.out
+'
+
+test_expect_success '2n4p ompi hello with --tasks-per-node' '
+	run_timeout 30 flux run -N2 --tasks-per-node=2 \
+		${MPI_HELLO} >hello_tpn_2n4p.out &&
+	grep "There are 4 tasks" hello_tpn_2n4p.out
+'
+
+test_expect_success '1n2p ompi hello with --tasks-per-core' '
+	run_timeout 30 flux run -N1 --tasks-per-core=2 --cores=1 \
+		${MPI_HELLO} >hello_tpc_1n2p.out &&
+	grep "There are 2 tasks" hello_tpc_1n2p.out
+'
+
 # see issue #27
 test_expect_success '2n3p ompi hello doesnt hang' '
 	run_timeout 60 flux run -N2 -n3 \
