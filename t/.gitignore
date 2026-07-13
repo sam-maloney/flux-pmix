@@ -1,0 +1,5 @@
+/etc/rc.lua
+/sharness.d/00-setup.sh
+/test-results/
+/trash-directory.*
+
