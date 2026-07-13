@@ -1,3 +1,18 @@
+flux-pmix version 0.7.1 - 2026-07-13
+------------------------------------
+
+## Fixes
+
+ * configure: check FLUX_PMIX_VERSION in AC_INIT (#132)
+ * plugin: fix job size for per-resource job requests (#131)
+
+## Build/test/doc
+
+ * MAINTAINERS.md: remove non-maintainers (#127)
+ * repo: add LICENSE to release tarball (#126)
+ * MAINTAINERS: add Sam Maloney (#125)
+ * doc: copy MAINTAINERS, CONTRIBUTING from flux-core (#121)
+
 flux-pmix version 0.7.0 - 2025-11-04
 ------------------------------------
 
