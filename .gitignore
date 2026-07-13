@@ -1,0 +1,41 @@
+# http://www.gnu.org/software/automake
+Makefile.in
+# http://www.gnu.org/software/autoconf
+/aclocal.m4
+/autom4te.cache/
+/config.status
+/configure
+/libtool
+.deps/
+.libs/
+
+# autoconf-preprocessed
+Makefile
+
+# Object files
+*.o
+# Libraries
+*.la
+*.lo
+
+# misc
+*.swp
+*.diff
+*.tar.gz
+*.orig
+*.core
+*.tap
+.coverage*
+*.trs
+*.log
+.dirstamp
+
+# coverage
+/flux-pmix-*-coverage.info
+/flux-pmix-*-coverage/
+*.gcno
+*.gcda
+
+# Rules to ignore auto-generated test harness scripts
+test_*.t
+
